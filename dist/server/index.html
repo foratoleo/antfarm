@@ -76,6 +76,38 @@
   --bg-code: #1f1e1b;
 }
 
+[data-theme="dark-blue"] {
+  --bg-page: #060b1a;
+  --bg-surface: #101d3a;
+  --bg-surface-alt: #0b152f;
+  --bg-column-header: #0f1840;
+  --text-primary: #e6ecff;
+  --text-secondary: #95a7d6;
+  --text-tertiary: #b0bfe7;
+  --border: #1f2f5a;
+  --border-light: #15224a;
+  --shadow: rgba(0, 0, 0, .55);
+  --shadow-heavy: rgba(0, 0, 0, .7);
+  --overlay: rgba(2, 8, 26, .75);
+
+  --header-bg: #0c1436;
+  --header-border: #182353;
+  --header-select-bg: #14224d;
+  --header-select-border: #1a2b57;
+
+  --accent-green: #63b7ff;
+  --accent-green-subtle: rgba(99, 183, 255, .18);
+  --accent-teal: #8cd9ff;
+  --accent-teal-subtle: rgba(140, 217, 255, .2);
+  --accent-orange: #7fb5ff;
+  --accent-orange-subtle: rgba(127, 181, 255, .2);
+  --accent-muted: rgba(255, 255, 255, .1);
+  --accent-orange-faint: rgba(127, 181, 255, .1);
+  --accent-highlight: #4a90ff;
+
+  --bg-code: #0a1129;
+}
+
 /* ── Auto dark mode when no explicit preference ───────────────── */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -417,31 +449,47 @@ setInterval(() => { if (currentWf) loadRuns(); }, 30000);
   const btn = document.getElementById('theme-toggle');
   const root = document.documentElement;
   const STORAGE_KEY = 'antfarm-theme';
+  const THEMES = ['light', 'dark', 'dark-blue'];
+  const ICONS = { light: '☀️', dark: '🌙', 'dark-blue': '🌊' };
+  const TOOLTIP = 'Cycle through light, dark, and blue dark themes';
+
+  function getStoredTheme() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored && THEMES.includes(stored) ? stored : null;
+  }
 
   function getEffectiveTheme() {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = getStoredTheme();
     if (stored) return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
+  function getNextTheme(current) {
+    const index = THEMES.indexOf(current);
+    if (index === -1) return THEMES[0];
+    return THEMES[(index + 1) % THEMES.length];
+  }
+
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
-    btn.textContent = theme === 'dark' ? '🌙' : '☀️';
-    btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    btn.textContent = ICONS[theme] || ICONS.light;
+    btn.title = TOOLTIP;
+    btn.setAttribute('aria-label', `${TOOLTIP} (current: ${theme})`);
   }
 
   applyTheme(getEffectiveTheme());
 
   btn.addEventListener('click', () => {
     const current = root.getAttribute('data-theme') || getEffectiveTheme();
-    const next = current === 'dark' ? 'light' : 'dark';
+    const next = getNextTheme(current);
     localStorage.setItem(STORAGE_KEY, next);
     applyTheme(next);
   });
 
-  // Update if system preference changes and no manual override
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (!localStorage.getItem(STORAGE_KEY)) applyTheme(getEffectiveTheme());
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    if (!getStoredTheme()) {
+      applyTheme(event.matches ? 'dark' : 'light');
+    }
   });
 })();
 </script>

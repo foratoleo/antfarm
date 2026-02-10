@@ -1,0 +1,14 @@
+# Progress Log
+Run: e49ed0fd-cd08-4eb0-a77d-34cd2b91412e
+Task: Add a new dark mode with blue colors
+Started: 2026-02-10 19:16:00 (America/Sao_Paulo)
+
+## Codebase Patterns
+- Dashboard UI is defined entirely in src/server/index.html; npm run build copies it to dist/server/index.html.
+
+---
+## 2026-02-10 19:46:00 - dark-blue-mode: Add a blue dark mode
+- Added a blue-themed dark palette plus a ternary theme toggle that cycles through light, dark, and the new blue mode.
+- Files changed: src/server/index.html, dist/server/index.html, tests/theme-toggle.test.js, progress.txt.
+- **Learnings:** The dashboard HTML/CSS/JS is maintained in src/server/index.html and bundled into dist/server/index.html during npm run build; theme toggles can be validated by parsing the markup via a lightweight Node test.
+---
