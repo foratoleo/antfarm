@@ -1,0 +1,2 @@
+{"timestamp": "2026-02-10T16:09:41.444802", "hook": "init_project", "level": "ERROR", "message": "Initialization failed", "data": {"error": "[Errno 13] Permission denied: PosixPath('/Users/forato-dr/.claude/user-guide-v2')", "type": "PermissionError"}}
+{"timestamp": "2026-02-10T16:10:58.769627", "hook": "init_project", "level": "ERROR", "message": "Initialization failed", "data": {"error": "[Errno 13] Permission denied: PosixPath('/Users/forato-dr/.claude/user-guide-v2')", "type": "PermissionError"}}

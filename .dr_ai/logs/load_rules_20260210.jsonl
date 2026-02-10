@@ -1,0 +1,2 @@
+{"timestamp": "2026-02-10T16:09:41.409722", "hook": "load_rules", "level": "INFO", "message": "RULES.md not found", "data": {"found": false}}
+{"timestamp": "2026-02-10T16:10:58.694175", "hook": "load_rules", "level": "INFO", "message": "RULES.md not found", "data": {"found": false}}
